@@ -1,0 +1,13 @@
+MAKE Version 3.6  Copyright (c) 1992 Borland International
+
+Available memory 29892608 bytes
+
+        c:\borlandc\bin\bcc -DHINSCH_VERSION -ooemhtp oem.cpp
+Borland C++  Version 3.1 Copyright (c) 1992 Borland International
+oem.cpp:
+
+        Available memory 3403940
+        c:\borlandc\bin\tlink /Tw /n /x /c /C /A=16 c:\borlandc\lib\c0wl oemhtp.obj @MAKE0000.$$$,htp.exe,,@MAKE0001.$$$,htp.def
+Turbo Link  Version 5.1 Copyright (c) 1992 Borland International
+        rlink -t -31 htp.res htp.exe
+Resource Linker  Version 1.00 Copyright (c)  1992 Borland International.
