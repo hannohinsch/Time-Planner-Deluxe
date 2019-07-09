@@ -1,0 +1,209 @@
+# HTP/KPM makefile
+
+# 386 optimized!
+CFLAGS  = -WS -3 -c -ml -w -H -D_CLASSDLL -O1
+LFLAGS  =  /Tw /n /x /c /C /A=16
+
+# debug
+#CFLAGS  = -WS -3 -c -ml -w -H -D_CLASSDLL -N
+#LFLAGS  =  /Tw /n /x /c /C /A=16 /v
+
+#
+# standard object files
+#
+
+OBJS=ADDRBOOK.OBJ\
+     ADDRESS.OBJ\
+     ADDRESSD.OBJ\
+     ALARM.OBJ\
+     ALARMD.OBJ\
+     ALARMSET.OBJ\
+     APPTIME.OBJ\
+     ARCHIVED.OBJ\
+     BASECAL.OBJ\
+     BASEGRID.OBJ\
+     BOUNDS.OBJ\
+     BROWGRID.OBJ\
+     BTNUTIL.OBJ\
+     CALCTL.OBJ\
+     CAT.OBJ\
+     CATBOX.OBJ\
+     CATDLG.OBJ\
+     CATLIST.OBJ\
+     CATTABLE.OBJ\
+     CATTREE.OBJ\
+     COLOR.OBJ\
+     COMM.OBJ\
+     CSV.OBJ\
+     CURSOR.OBJ\
+     DATEPICK.OBJ\
+     DAYGRID.OBJ\
+     DAYVIEWD.OBJ\
+     DIALDLG.OBJ\
+     DIALSETD.OBJ\
+     DRAGGRID.OBJ\
+     DRAGWIN.OBJ\
+     DURATION.OBJ\
+     DURFMTD.OBJ\
+     ENTRYTAB.OBJ\
+     ERROR.OBJ\
+     FIELDMAP.OBJ\
+     FILECMD.OBJ\
+     FILTER.OBJ\
+     FILTERD.OBJ\
+     FLDMAPD.OBJ\
+     FMTEDIT.OBJ\
+     FONTMAP.OBJ\
+     FRAME.OBJ\
+     FREQ.OBJ\
+     FREQCAL.OBJ\
+     FREQDLG.OBJ\
+     GDIMAP.OBJ\
+     GRAFGRID.OBJ\
+     GRIDUTIL.OBJ\
+     GRPCATD.OBJ\
+     GUESSDLG.OBJ\
+     HOLCAL.OBJ\
+     HOLDLG.OBJ\
+     HOLIDAY.OBJ\
+     HTP.OBJ\
+     IMPEXP.OBJ\
+     IMPEXPD.OBJ\
+     INK.OBJ\
+     INTLFMT.OBJ\
+     KEYEDLST.OBJ\
+     MARKCTL.OBJ\
+     MEMNOTE.OBJ\
+     MEMORDLG.OBJ\
+     MEMVIEW.OBJ\
+     MEMVIEWD.OBJ\
+     MENUCMD.OBJ\
+     MESSAGE.OBJ\
+     MONGRID.OBJ\
+     MOUSGRID.OBJ\
+     MOUSHELP.OBJ\
+     NEWDLG.OBJ\
+     NOTE.OBJ\
+     NOTELISD.OBJ\
+     NOTEMENU.OBJ\
+     NOTESET.OBJ\
+     NOTETAB.OBJ\
+     NOTEVIEW.OBJ\
+     OBJSTRM.OBJ\
+     ODBUTTON.OBJ\
+     OURDLG.OBJ\
+     OURFILED.OBJ\
+     OURINPD.OBJ\
+     PAINT.OBJ\
+     PARSE.OBJ\
+     PEN.OBJ\
+     PENEDIT.OBJ\
+     PREFERD.OBJ\
+     PRINT.OBJ\
+     PROFILE.OBJ\
+     PRTDLG.OBJ\
+     RAWGRID.OBJ\
+     REPORTD.OBJ\
+     RPTGRID.OBJ\
+     RULEGRID.OBJ\
+     SAFEPOOL.OBJ\
+     SAFSTR.OBJ\
+     SELECTOR.OBJ\
+     SETMOND.OBJ\
+     SNOOP.OBJ\
+     SORTD.OBJ\
+     SYSSTATE.OBJ\
+     TCOLLECT.OBJ\
+     TIMECOMP.OBJ\
+     TIMECONF.OBJ\
+     TIPWIN.OBJ\
+     TMLINEGR.OBJ\
+     UTILITY.OBJ\
+     VALUE.OBJ\
+     WEEKGRID.OBJ\
+     WORKDLG.OBJ\
+     WORKTIME.OBJ\
+     XARRAY.OBJ
+
+#
+# resource compiler
+#
+htp.res: htp.rc rc.h
+    c:\borlandc\bin\brcc htp.rc htp.res
+
+#
+# LINK
+#
+
+LINK = c:\borlandc\bin\tlink
+
+# with dlls
+STDLIBS = c:\borlandc\lib\import c:\borlandc\lib\mathwl c:\borlandc\lib\crtldll
+OWLLIBS= c:\borlandc\owl\lib\owl /v- c:\borlandc\classlib\lib\tclasdll
+
+# straight link
+#STDLIBS = c:\borlandc\lib\import c:\borlandc\lib\mathwl c:\borlandc\lib\cwl c:\windev\lib\commdlg
+#OWLLIBS= c:\borlandc\owl\lib\owlwl /v- c:\borlandc\classlib\lib\tclassl
+
+#
+# htp version
+#
+htp.exe: turboc.cfg htp.res oemhtp.obj $(OBJS)
+     $(LINK) $(LFLAGS) c:\borlandc\lib\c0wl oemhtp.obj @&&!
+$(OBJS)
+!,htp.exe,,@&&!
+BWCC.LIB $(OWLLIBS) $(STDLIBS)
+!,htp.def
+     rlink -t -31 htp.res htp.exe
+
+#
+# key version
+#
+kpm.exe: turboc.cfg htp.res oemkey.obj $(OBJS)
+     $(LINK) $(LFLAGS) c:\borlandc\lib\c0wl oemkey.obj @&&!
+$(OBJS)
+!,kpm.exe,,@&&!
+BWCC.LIB $(OWLLIBS) $(STDLIBS)
+!,htp.def
+     rlink -t -31 htp.res kpm.exe
+
+#
+# assemble
+#
+.asm.obj:
+        TASM -D__l__ -ml -DWINDOWS -DWindows -o -Ic:\borlandc\crtl\rtlinc $.
+
+
+#
+# compile
+#
+
+CC = c:\borlandc\bin\bcc
+
+INCLUDE = c:\borlandc\owl\include;c:\borlandc\classlib\include;c:\borlandc\include;
+
+# create config file (avoids command line overrun)
+turboc.cfg: makefile
+    echo $(CFLAGS)  >TURBOC.CFG
+    echo -I$(INCLUDE ) >>TURBOC.CFG
+
+.cpp.obj:
+        $(CC) {$. }
+
+
+# special htp oem object
+oemhtp.obj: oem.cpp
+        $(CC) -DHINSCH_VERSION -ooemhtp oem.cpp
+
+# special key oem object
+oemkey.obj: oem.cpp
+        $(CC) -DKEY_VERSION -ooemkey oem.cpp
+
+#
+# special debug compile
+#
+#override implicit make rule; add -v for debug info
+
+#bounds.obj: bounds.cpp
+#        $(CC) -v $&.cpp
+
